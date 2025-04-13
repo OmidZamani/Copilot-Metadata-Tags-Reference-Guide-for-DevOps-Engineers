@@ -1,660 +1,491 @@
 ---
 
-# 🧠 GitHub Copilot Metadata Tags – Real Examples per Tag
+# 🧠 GitHub Copilot Metadata Tags Reference  
+_A Comprehensive Guide for `ask`, `edit`, and `agent` Modes_
 
-> A tag-by-tag reference for GitHub Copilot Agent Mode, each with a realistic, production-grade example.
+> This document provides a canonical reference for all currently known metadata tags used with GitHub Copilot across **Agent Mode**, **Chat/Ask**, **Edit Mode**, **Copilot CLI**, and **Copilot for Docs**. It includes examples, mode-specific notes, and LLM model recommendations.
 
 ---
+
+## ✅ Core Tags
 
 ### `@copilot-mode`
-
-```bash
-# @copilot-mode: agent
-"""
-Scan Terraform files for misconfigured AWS S3 buckets and generate a compliance report.
-"""
-```
-
----
-
-### `@mcp-tools`
-
-```bash
-# @mcp-tools: github-code,terminal
-"""
-Check last 5 shell commands used to deploy the staging environment via CLI.
-"""
-```
+- **Description:** Sets the operational mode.
+- **Modes Supported:** `ask`, `edit`, `agent`
+- **Example:**
+  ```bash
+  # @copilot-mode: agent
+  ```
 
 ---
 
 ### `@model`
+- **Description:** Chooses the LLM to process the prompt.
+- **Modes Supported:** All
+- **Example:**
+  ```bash
+  # @model: gpt-4o
+  ```
 
-```bash
-# @model: claude-3.7-sonnet
-"""
-Summarize security issues in the backend codebase using Claude’s audit capabilities.
-"""
-```
+- **Model Notes:**
+  | Model         | Strengths | Ideal Modes |
+  |---------------|-----------|-------------|
+  | `gpt-4o`      | Fast, smart, multi-modal | all |
+  | `claude-3.7`  | Structured reasoning, compliance docs | `agent` |
+  | `gemini-1.5`  | File/document structure, DevDocs | `agent`, `ask` |
+  | `codex`       | Classic code completion | `edit`, CLI |
 
 ---
 
-### `@analysis-scope`
+## 🔍 Analysis Tags
 
-```bash
-# @analysis-scope: infrastructure-as-code
-"""
-Detect performance bottlenecks in Terraform autoscaling configuration for EC2 instances.
-"""
-```
+### `@analysis-scope`
+- **Description:** Limits what part of the project is being analyzed.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @analysis-scope: infrastructure-as-code,ci-cd
+  ```
 
 ---
 
 ### `@analysis-type`
-
-```bash
-# @analysis-type: security
-"""
-Scan source code and Dockerfiles for CVEs, hardcoded credentials, and insecure defaults.
-"""
-```
+- **Description:** What kind of analysis is expected.
+- **Modes Supported:** `agent`, `ask`
+- **Example:**
+  ```bash
+  # @analysis-type: security,performance,anti-patterns
+  ```
 
 ---
 
 ### `@analysis-depth`
+- **Description:** Defines how deep the code inspection should go.
+- **Modes Supported:** `agent`, `edit`
+- **Example:**
+  ```bash
+  # @analysis-depth: inter-procedural
+  ```
 
-```bash
-# @analysis-depth: inter-procedural
-"""
-Track flow of JWT tokens from generation to database writes across services.
-"""
-```
+---
+
+## 🚀 Optimization Tags
+
+### `@optimize-for`
+- **Description:** Define your optimization goals.
+- **Modes Supported:** `agent`, `edit`
+- **Example:**
+  ```bash
+  # @optimize-for: security,size,speed
+  ```
 
 ---
 
 ### `@optimization`
-
-```bash
-# @optimization: true
-"""
-Optimize nginx.conf to improve response time under high load.
-"""
-```
-
----
-
-### `@optimize-for`
-
-```bash
-# @optimize-for: security,size,speed
-"""
-Generate Dockerfile with multi-stage build and minimal footprint for a Go app.
-"""
-```
+- **Description:** Enables optimization mode.
+- **Modes Supported:** `edit`, `agent`
+- **Example:**
+  ```bash
+  # @optimization: true
+  ```
 
 ---
 
 ### `@memory-optimization`
-
-```bash
-# @memory-optimization: off-heap-caching
-"""
-Refactor Java service to use off-heap cache for large immutable lookup tables.
-"""
-```
+- **Description:** Suggests memory tuning strategies.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @memory-optimization: off-heap-caching
+  ```
 
 ---
 
 ### `@gc-strategy`
-
-```bash
-# @gc-strategy: G1GC
-"""
-Tune JVM GC for better throughput in a real-time analytics pipeline.
-"""
-```
+- **Description:** Hints to apply garbage collection strategy (for JVM-based systems).
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @gc-strategy: G1GC
+  ```
 
 ---
 
-### `@target`
+## 🧱 Infrastructure & Platform Tags
 
-```bash
-# @target: entire_project
-"""
-Identify deprecated APIs across all modules and suggest migration paths.
-"""
-```
+### `@target`
+- **Description:** Target element (file, function, project).
+- **Modes Supported:** `edit`, `agent`
+- **Example:**
+  ```bash
+  # @target: entire_project
+  ```
 
 ---
 
 ### `@target-platforms`
-
-```bash
-# @target-platforms: github-actions,gitlab-ci
-"""
-Generate parallelizable test matrix workflows for all supported platforms.
-"""
-```
+- **Description:** Specifies CI/CD targets.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @target-platforms: github-actions,gitlab-ci
+  ```
 
 ---
 
 ### `@environment`
-
-```bash
-# @environment: kubernetes,aws
-"""
-Deploy Prometheus, Grafana, and Alertmanager stack to EKS.
-"""
-```
-
----
-
-### `@requirement`
-
-```bash
-# @requirement: canary-deployment
-"""
-Implement traffic-splitting rollout strategy using Istio.
-"""
-```
-
----
-
-### `@security-requirements`
-
-```bash
-# @security-requirements: SAST,DAST,secrets-scan
-"""
-Configure automated security scanning for all PRs and scheduled pipelines.
-"""
-```
+- **Description:** Deployment environment.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @environment: kubernetes,aws
+  ```
 
 ---
 
 ### `@iac-tool`
-
-```bash
-# @iac-tool: terraform
-"""
-Validate IAM policy configurations for least privilege enforcement.
-"""
-```
-
----
-
-### `@cloud-provider`
-
-```bash
-# @cloud-provider: gcp
-"""
-Optimize Cloud Run service configuration to reduce cold-start latency.
-"""
-```
+- **Description:** Specifies infrastructure-as-code tool.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @iac-tool: terraform
+  ```
 
 ---
 
-### `@security-standards`
+## 🔐 Security & Compliance Tags
 
-```bash
-# @security-standards: CIS,NIST
-"""
-Check cloud infra against CIS benchmarks for S3 and IAM.
-"""
-```
+### `@security-requirements`
+- **Description:** Lists required security layers.
+- **Modes Supported:** `agent`, `edit`
+- **Example:**
+  ```bash
+  # @security-requirements: SAST,DAST,secrets-scan
+  ```
 
 ---
 
 ### `@security-tools`
-
-```bash
-# @security-tools: snyk,trivy,codeql
-"""
-Inject image scanning into Docker build stage and run CodeQL on push.
-"""
-```
-
----
-
-### `@pipeline-integration`
-
-```bash
-# @pipeline-integration: github-actions
-"""
-Trigger CodeQL analysis after successful test stage.
-"""
-```
+- **Description:** Lists which scanners to use.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @security-tools: snyk,trivy,codeql
+  ```
 
 ---
 
-### `@automation-tools`
-
-```bash
-# @automation-tools: prometheus-alertmanager
-"""
-Generate Alertmanager routes for CPU/memory usage above thresholds.
-"""
-```
-
----
-
-### `@gitops-stack`
-
-```bash
-# @gitops-stack: argocd
-"""
-Generate ArgoCD Application YAMLs for multi-namespace rollout.
-"""
-```
-
----
-
-### `@stack`
-
-```bash
-# @stack: prometheus,grafana,loki,tempo
-"""
-Configure observability stack with unified dashboards and logs correlation.
-"""
-```
-
----
-
-### `@language`
-
-```bash
-# @language: python,bash
-"""
-Lint all Python scripts and Bash shell files for style violations.
-"""
-```
-
----
-
-### `@base-images`
-
-```bash
-# @base-images: node:18-alpine,golang:1.22-alpine
-"""
-Use slim base images for minimal attack surface in container builds.
-"""
-```
-
----
-
-### `@error-context`
-
-```bash
-# @error-context: k8s,terraform,cicd
-"""
-Analyze common failure patterns in Kubernetes job restarts and CI timeouts.
-"""
-```
-
----
-
-### `@error-type`
-
-```bash
-# @error-type: container-crashloop
-"""
-Identify resource overcommitment leading to CrashLoopBackOff in pods.
-"""
-```
-
----
-
-### `@retry-strategy`
-
-```bash
-# @retry-strategy: exponential-backoff(max=3)
-"""
-Retry flaky integration tests in CI with backoff.
-"""
-```
-
----
-
-### `@timeout`
-
-```bash
-# @timeout: 600s
-"""
-Set global timeout for image build and signing process.
-"""
-```
-
----
-
-### `@concurrency`
-
-```bash
-# @concurrency: 5
-"""
-Limit simultaneous database migrations to 5 to avoid lock contention.
-"""
-```
-
----
-
-### `@output-format`
-
-```bash
-# @output-format: json
-"""
-Export scan results in JSON for ingestion by SonarCloud dashboard.
-"""
-```
-
----
-
-### `@doc-style`
-
-```bash
-# @doc-style: Doxygen
-"""
-Document exported APIs with types, usage, and warnings.
-"""
-```
-
----
-
-### `@detail-level`
-
-```bash
-# @detail-level: maintainer
-"""
-Include architectural justifications and cross-module notes.
-"""
-```
-
----
-
-### `@env-file`
-
-```bash
-# @env-file: .copilot/env.prod
-"""
-Inject environment variables securely into container builds.
-"""
-```
-
----
-
-### `@secret-provider`
-
-```bash
-# @secret-provider: hashicorp-vault(path=secret/cicd)
-"""
-Fetch credentials for Docker registry login during deploy.
-"""
-```
-
----
-
-### `@config-version`
-
-```bash
-# @config-version: 2.3.1
-"""
-Lock metadata schema version for reproducibility.
-"""
-```
-
----
-
-### `@feature-flags`
-
-```bash
-# @feature-flags: canary-deploy=enabled
-"""
-Toggle Canary release mechanism on or off per environment.
-"""
-```
-
----
-
-### `@depends-on`
-
-```bash
-# @depends-on: postgres:14.3
-"""
-Ensure service B starts after database A is up.
-"""
-```
-
----
-
-### `@service-binding`
-
-```bash
-# @service-binding: redis->cache
-"""
-Wire Redis into application as a caching backend.
-"""
-```
-
----
-
-### `@dependency-resolution`
-
-```bash
-# @dependency-resolution: strict-semver
-"""
-Avoid auto-upgrades of breaking changes in semantic versioning.
-"""
-```
-
----
-
-### `@metrics-endpoint`
-
-```bash
-# @metrics-endpoint: prometheus:9090
-"""
-Configure Prometheus scrape for custom metrics exporter.
-"""
-```
-
----
-
-### `@log-level`
-
-```bash
-# @log-level: debug
-"""
-Enable verbose logs for test environments only.
-"""
-```
-
----
-
-### `@alert-channels`
-
-```bash
-# @alert-channels: slack#devops-alerts,pagerduty
-"""
-Send critical alerts to Slack + PagerDuty teams.
-"""
-```
-
----
-
-### `@alert-thresholds`
-
-```bash
-# @alert-thresholds: cpu>80%,memory>90%
-"""
-Define when alerts should be triggered for pod resources.
-"""
-```
-
----
-
-### `@tech-preview`
-
-```bash
-# @tech-preview: wasm-runtime
-"""
-Enable WASM runtime support in edge gateways.
-"""
-```
-
----
-
-### `@beta-features`
-
-```bash
-# @beta-features: ai-assisted-debugging
-"""
-Enable experimental AI-powered debugging hints in CI.
-"""
-```
-
----
-
-### `@debug-mode`
-
-```bash
-# @debug-mode: port=2345
-"""
-Start debugger listener on dev containers.
-"""
-```
-
----
-
-### `@trace-sampling`
-
-```bash
-# @trace-sampling: 10%
-"""
-Only sample 10% of traces for performance analysis.
-"""
-```
-
----
-
-### `@rbac-rules`
-
-```yaml
-@rbac-rules:
-  - verbs: [get, list]
-    resources: [pods]
-"""
-Grant readonly access to deployment pods for support team.
-"""
-```
-
----
-
-### `@approval-workflow`
-
-```bash
-# @approval-workflow: 2-maintainers
-"""
-Block merge until 2 code owners approve changes.
-"""
-```
-
----
-
-### `@resource-quotas`
-
-```yaml
-@resource-quotas:
-  cpu: 2000m
-  memory: 4Gi
-"""
-Prevent noisy neighbors in a multi-tenant cluster.
-"""
-```
-
----
-
-### `@scale-policy`
-
-```bash
-# @scale-policy: horizontal(max=10)
-"""
-Use HPA for scaling frontend pods under load.
-"""
-```
+### `@security-standards`
+- **Description:** Define compliance standards.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @security-standards: CIS,NIST,HIPAA
+  ```
 
 ---
 
 ### `@compliance-framework`
-
-```bash
-# @compliance-framework: soc2-type2
-"""
-Ensure data access logs, RBAC and retention meet audit requirements.
-"""
-```
-
----
-
-### `@audit-trail`
-
-```bash
-# @audit-trail: aws-cloudtrail
-"""
-Enable CloudTrail for IAM, EC2 and VPC changes.
-"""
-```
+- **Description:** Organizational compliance frameworks.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @compliance-framework: soc2-type2
+  ```
 
 ---
 
-### `@data-classification`
+## 🧪 Error Diagnostics Tags
 
-```bash
-# @data-classification: pii
-"""
-Enable encryption, anonymization and logging redactions.
-"""
-```
+### `@error-context`
+- **Description:** Adds context for error logs.
+- **Modes Supported:** `agent`, `chat`
+- **Example:**
+  ```bash
+  # @error-context: k8s,terraform,cicd
+  ```
+
+---
+
+### `@error-type`
+- **Description:** Helps Copilot narrow down problems.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @error-type: container-crashloop,pipeline-timeout
+  ```
 
 ---
 
-### `@encryption-at-rest`
-
-```bash
-# @encryption-at-rest: aes-256
-"""
-Use AWS KMS + AES-256 for EBS volume encryption.
-"""
-```
+### `@retry-strategy`
+- **Description:** How to retry failed operations.
+- **Modes Supported:** `agent`, `edit`
+- **Example:**
+  ```bash
+  # @retry-strategy: exponential-backoff(max=3)
+  ```
 
 ---
+
+## 📤 Output Control Tags
+
+### `@output-format`
+- **Description:** Output type for results.
+- **Modes Supported:** All
+- **Example:**
+  ```bash
+  # @output-format: markdown
+  ```
+
+---
+
+### `@doc-style`
+- **Description:** Documentation formatting convention.
+- **Modes Supported:** `edit`, `agent`
+- **Example:**
+  ```bash
+  # @doc-style: Doxygen
+  ```
+
+---
+
+### `@detail-level`
+- **Description:** How detailed output should be.
+- **Modes Supported:** All
+- **Example:**
+  ```bash
+  # @detail-level: maintainer
+  ```
+
+---
+
+## ⚙️ Flow Control & Execution
+
+### `@timeout`
+- **Description:** Max allowed task time.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @timeout: 600s
+  ```
+
+---
+
+### `@concurrency`
+- **Description:** Max simultaneous executions.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @concurrency: 5
+  ```
+
+---
+
+## 📁 Environment & Secrets
+
+### `@env-file`
+- **Description:** Environment variable file.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @env-file: .copilot/env.prod
+  ```
+
+---
+
+### `@secret-provider`
+- **Description:** Source for secrets.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @secret-provider: hashicorp-vault(path=secret/cicd)
+  ```
+
+---
+
+## 🔧 Dependency Management
+
+### `@depends-on`
+- **Description:** Service dependencies.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @depends-on: postgres:14.3
+  ```
+
+---
+
+### `@service-binding`
+- **Description:** Maps services to roles.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @service-binding: redis->cache
+  ```
+
+---
+
+### `@dependency-resolution`
+- **Description:** How to resolve library versions.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @dependency-resolution: strict-semver
+  ```
+
+---
+
+## 📡 Monitoring & Alerts
+
+### `@metrics-endpoint`
+- **Description:** Prometheus or other metrics endpoint.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @metrics-endpoint: prometheus:9090
+  ```
+
+---
+
+### `@log-level`
+- **Description:** Log verbosity.
+- **Modes Supported:** `agent`, `edit`
+- **Example:**
+  ```bash
+  # @log-level: debug
+  ```
+
+---
+
+### `@alert-channels`
+- **Description:** Where to send alerts.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @alert-channels: slack#devops-alerts,pagerduty
+  ```
+
+---
+
+### `@alert-thresholds`
+- **Description:** Conditions for triggering alerts.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @alert-thresholds: cpu>80%,memory>90%
+  ```
+
+---
+
+## 🧪 Experimental Features
+
+### `@beta-features`
+- **Description:** Activates beta flags.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @beta-features: ai-assisted-debugging
+  ```
+
+---
+
+### `@tech-preview`
+- **Description:** Enables tech previews.
+- **Modes Supported:** `agent`, `edit`
+- **Example:**
+  ```bash
+  # @tech-preview: wasm-runtime
+  ```
+
+---
+
+### `@debug-mode`
+- **Description:** Enable debugging support.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @debug-mode: port=2345
+  ```
+
+---
+
+### `@trace-sampling`
+- **Description:** For observability (tracing).
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @trace-sampling: 10%
+  ```
+
+---
+
+## 🧩 Platform Extension & Plugin Tags
 
 ### `@extension-point`
-
-```bash
-# @extension-point: custom-linter
-"""
-Plug into the PR creation event to run custom linting logic.
-"""
-```
+- **Description:** Defines custom extensibility.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @extension-point: custom-linter
+  ```
 
 ---
 
 ### `@plugin-apis`
-
-```bash
-# @plugin-apis: kubernetes-client@8.0
-"""
-Use k8s client to query pod labels and conditions.
-"""
-```
+- **Description:** Available plugin API versions.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @plugin-apis: kubernetes-client@8.0
+  ```
 
 ---
 
 ### `@package-registry`
+- **Description:** Package repository config.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @package-registry: github-npm-registry
+  ```
 
-```bash
-# @package-registry: github-npm-registry
-"""
-Use private GitHub NPM registry for internal packages.
-"""
-```
+---
+
+## 🛡️ Access Control & Org Policies
+
+### `@rbac-rules`
+- **Description:** Role-based access controls.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```yaml
+  # @rbac-rules:
+  #   - verbs: [get, list]
+  #     resources: [pods]
+  ```
+
+---
+
+### `@approval-workflow`
+- **Description:** Requires approval step.
+- **Modes Supported:** `agent`
+- **Example:**
+  ```bash
+  # @approval-workflow: 2-maintainers
+  ```
+
+---
+
+## 🧮 Final Tips
+
+- Use **`@copilot-mode: agent`** for autonomous multi-step jobs
+- Use **`Claude 3.7`** or **`GPT-4o`** for production-grade analysis
+- Combine tags for layered control:  
+  ✅ Example:
+  ```bash
+  # @copilot-mode: agent
+  # @model: claude-3.7
+  # @optimize-for: security,size
+  # @environment: aws,kubernetes
+  ```
 
 ---
