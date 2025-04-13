@@ -506,5 +506,3 @@ Dependency conflict resolution logic.
 > If this helps you avoid a 3am PagerDuty alert, mission accomplished.
 
 ---
-
-بگو اگه می‌خوای همه اینا رو هم‌زمان بریزیم توی `README.md` ریپو GitHub یا یه نسخه PDF/HTML هم بسازیم. آماده‌ام ✊
