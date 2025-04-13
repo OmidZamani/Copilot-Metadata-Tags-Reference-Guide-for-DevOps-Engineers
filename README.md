@@ -1,508 +1,660 @@
+---
 
+# 🧠 GitHub Copilot Metadata Tags – Real Examples per Tag
 
-# `copilot-metadata-reference`  
-**Advanced GitHub Copilot Metadata Tags**  
-*A field guide for DevOps engineers, SREs, and infra nerds.*
+> A tag-by-tag reference for GitHub Copilot Agent Mode, each with a realistic, production-grade example.
 
+---
 
-
-## 🧠 @copilot-mode
-
-Controls the operational context Copilot should behave in.
+### `@copilot-mode`
 
 ```bash
-@copilot-mode: advanced
+# @copilot-mode: agent
+"""
+Scan Terraform files for misconfigured AWS S3 buckets and generate a compliance report.
+"""
 ```
 
-**Example:**
+---
 
-```dockerfile
-# @copilot-mode: advanced
+### `@mcp-tools`
+
+```bash
+# @mcp-tools: github-code,terminal
+"""
+Check last 5 shell commands used to deploy the staging environment via CLI.
+"""
+```
+
+---
+
+### `@model`
+
+```bash
+# @model: claude-3.7-sonnet
+"""
+Summarize security issues in the backend codebase using Claude’s audit capabilities.
+"""
+```
+
+---
+
+### `@analysis-scope`
+
+```bash
+# @analysis-scope: infrastructure-as-code
+"""
+Detect performance bottlenecks in Terraform autoscaling configuration for EC2 instances.
+"""
+```
+
+---
+
+### `@analysis-type`
+
+```bash
+# @analysis-type: security
+"""
+Scan source code and Dockerfiles for CVEs, hardcoded credentials, and insecure defaults.
+"""
+```
+
+---
+
+### `@analysis-depth`
+
+```bash
+# @analysis-depth: inter-procedural
+"""
+Track flow of JWT tokens from generation to database writes across services.
+"""
+```
+
+---
+
+### `@optimization`
+
+```bash
+# @optimization: true
+"""
+Optimize nginx.conf to improve response time under high load.
+"""
+```
+
+---
+
+### `@optimize-for`
+
+```bash
 # @optimize-for: security,size,speed
-
 """
-Generate a production-ready Dockerfile for a NestJS/PostgreSQL app that:
-1. Uses multi-stage build with BuildKit
-2. Runs as non-root user
-3. Includes healthchecks with curl
-4. Minimizes final image size (under 250MB)
-5. Scans for vulnerabilities during build
-6. Handles SIGTERM properly
-7. Sets resource limits
-
-Base images:
-- Build: node:18.16.0-bullseye-slim
-- Runtime: debian:bookworm-slim
+Generate Dockerfile with multi-stage build and minimal footprint for a Go app.
 """
-```
-
----
-
-## ⚙️ Execution Flow Control
-
-### `@retry-strategy`
-
-Defines how Copilot should retry failed steps.
-
-```bash
-@retry-strategy: exponential-backoff(max=3)
-```
-
-**Example:**
-
-```bash
-# @retry-strategy: exponential-backoff(max=3)
-# Useful for flaky network or registry timeouts in CI.
-```
-
----
-
-### `@timeout`
-
-Specifies max duration for any task.
-
-```bash
-@timeout: 600s
-```
-
-**Example:**
-
-```bash
-# @timeout: 600s
-# Prevent long-running integration tests from hanging the job.
-```
-
----
-
-### `@concurrency`
-
-Limits number of concurrent Copilot tasks.
-
-```bash
-@concurrency: 5
-```
-
-**Example:**
-
-```yaml
-# @concurrency: 5
-# Run up to 5 jobs in parallel during matrix builds.
-```
-
----
-
-## 🌍 Environment Variables and Secrets
-
-### `@env-file`
-
-Path to environment variable file.
-
-```bash
-@env-file: .copilot/env.prod
-```
-
-**Example:**
-
-```bash
-# @env-file: .copilot/env.prod
-# Load runtime credentials or feature flags from versioned env file.
-```
-
----
-
-### `@secret-provider`
-
-Define external vault or secrets backend.
-
-```bash
-@secret-provider: hashicorp-vault(path=secret/cicd)
-```
-
-**Example:**
-
-```bash
-# @secret-provider: hashicorp-vault(path=secret/cicd)
-# Mount secrets like DB_PASSWORD into build context securely.
-```
-
----
-
-## 🔗 Dependency and Service Mapping
-
-### `@depends-on`
-
-Explicitly list service dependencies.
-
-```bash
-@depends-on: postgres:14.3
-```
-
-**Example:**
-
-```yaml
-# @depends-on: postgres:14.3
-# Ensures database is available before app boots.
-```
-
----
-
-### `@service-binding`
-
-Logical binding between service components.
-
-```bash
-@service-binding: redis->cache
-```
-
-**Example:**
-
-```yaml
-# @service-binding: redis->cache
-# Maps redis service to application config key "cache".
-```
-
----
-
-## 📈 Monitoring and Alerts
-
-### `@metrics-endpoint`
-
-Where to send metrics.
-
-```bash
-@metrics-endpoint: prometheus:9090
-```
-
-**Example:**
-
-```bash
-# @metrics-endpoint: prometheus:9090
-# Use for tracking CPU/Memory spikes in long-running builds.
-```
-
----
-
-### `@log-level`
-
-Set verbosity of logs.
-
-```bash
-@log-level: debug
-```
-
-**Example:**
-
-```bash
-# @log-level: debug
-# Enable verbose output during troubleshooting.
-```
-
----
-
-### `@alert-channels`
-
-Where alerts should be sent.
-
-```bash
-@alert-channels: slack#devops-alerts, pagerduty
-```
-
-**Example:**
-
-```bash
-# @alert-channels: slack#devops-alerts, pagerduty
-# Push crash or timeout notifications to your incident system.
-```
-
----
-
-### `@alert-thresholds`
-
-When to raise alarms.
-
-```bash
-@alert-thresholds: cpu>80%, memory>90%
-```
-
-**Example:**
-
-```bash
-# @alert-thresholds: cpu>80%, memory>90%
-# Define autoscaler triggers or alertmanager rules.
-```
-
----
-
-## 🧪 Beta and Experimental
-
-### `@tech-preview`
-
-Enable alpha-stage capabilities.
-
-```bash
-@tech-preview: wasm-runtime
-```
-
-**Example:**
-
-```bash
-# @tech-preview: wasm-runtime
-# Try deploying to WASI-based serverless infra.
-```
-
----
-
-### `@beta-features`
-
-Enable early-access tooling.
-
-```bash
-@beta-features: ai-assisted-debugging
-```
-
-**Example:**
-
-```bash
-# @beta-features: ai-assisted-debugging
-# Let Copilot suggest root causes and fix patches before you even ask.
-```
-
----
-
-### `@debug-mode`
-
-Enable runtime debugger.
-
-```bash
-@debug-mode: port=2345
-```
-
-**Example:**
-
-```bash
-# @debug-mode: port=2345
-# Attach remote debugger for step-through breakpoints in test containers.
-```
-
----
-
-### `@trace-sampling`
-
-Configure distributed tracing.
-
-```bash
-@trace-sampling: 10%
-```
-
-**Example:**
-
-```bash
-# @trace-sampling: 10%
-# Capture sampling traces for performance regressions.
-```
-
----
-
-## 📦 Platform and Config Management
-
-### `@rbac-rules`
-
-Fine-grained access control.
-
-```yaml
-@rbac-rules:
-  - verbs: [get, list]
-    resources: [pods]
-```
-
-**Example:**
-
-```yaml
-# @rbac-rules:
-#   - verbs: [get, list]
-#     resources: [pods]
-# Secure your agent’s actions using Kubernetes RBAC.
-```
-
----
-
-### `@approval-workflow`
-
-Workflow approval logic.
-
-```bash
-@approval-workflow: 2-maintainers
-```
-
-**Example:**
-
-```bash
-# @approval-workflow: 2-maintainers
-# Require approval before production rollout.
-```
-
----
-
-### `@config-version`
-
-Specify configuration versioning.
-
-```bash
-@config-version: 2.3.1
-```
-
----
-
-### `@feature-flags`
-
-Toggle features via flags.
-
-```bash
-@feature-flags: canary-deploy=enabled
-```
-
----
-
-## ✅ Resource & Scaling Strategy
-
-### `@resource-quotas`
-
-Declare resource budgets.
-
-```yaml
-@resource-quotas:
-  cpu: 2000m
-  memory: 4Gi
-```
-
-**Example:**
-
-```yaml
-# @resource-quotas:
-#   cpu: 2000m
-#   memory: 4Gi
-# Prevent noisy-neighbor scenarios in staging clusters.
-```
-
----
-
-### `@scale-policy`
-
-Horizontal or vertical autoscaling configs.
-
-```bash
-@scale-policy: horizontal(max=10)
 ```
 
 ---
 
 ### `@memory-optimization`
 
-Memory tuning during runtime.
-
 ```bash
-@memory-optimization: off-heap-caching
+# @memory-optimization: off-heap-caching
+"""
+Refactor Java service to use off-heap cache for large immutable lookup tables.
+"""
 ```
 
 ---
 
 ### `@gc-strategy`
 
-Garbage collection strategy.
-
 ```bash
-@gc-strategy: G1GC
+# @gc-strategy: G1GC
+"""
+Tune JVM GC for better throughput in a real-time analytics pipeline.
+"""
 ```
 
 ---
 
-## 🔐 Compliance and Security
-
-### `@compliance-framework`
-
-Audit and regulatory control.
+### `@target`
 
 ```bash
-@compliance-framework: soc2-type2
+# @target: entire_project
+"""
+Identify deprecated APIs across all modules and suggest migration paths.
+"""
 ```
 
 ---
 
-### `@audit-trail`
-
-Track sensitive actions.
+### `@target-platforms`
 
 ```bash
-@audit-trail: aws-cloudtrail
+# @target-platforms: github-actions,gitlab-ci
+"""
+Generate parallelizable test matrix workflows for all supported platforms.
+"""
 ```
 
 ---
 
-### `@data-classification`
-
-Tag sensitive data types.
+### `@environment`
 
 ```bash
-@data-classification: pii
+# @environment: kubernetes,aws
+"""
+Deploy Prometheus, Grafana, and Alertmanager stack to EKS.
+"""
 ```
 
 ---
 
-### `@encryption-at-rest`
-
-Ensure secure data storage.
+### `@requirement`
 
 ```bash
-@encryption-at-rest: aes-256
+# @requirement: canary-deployment
+"""
+Implement traffic-splitting rollout strategy using Istio.
+"""
 ```
 
 ---
 
-## 🧩 Extensibility & Dev Platform
-
-### `@extension-point`
-
-Expose plugin hooks.
+### `@security-requirements`
 
 ```bash
-@extension-point: custom-linter
+# @security-requirements: SAST,DAST,secrets-scan
+"""
+Configure automated security scanning for all PRs and scheduled pipelines.
+"""
 ```
 
 ---
 
-### `@plugin-apis`
-
-Available APIs for plugins.
+### `@iac-tool`
 
 ```bash
-@plugin-apis: kubernetes-client@8.0
+# @iac-tool: terraform
+"""
+Validate IAM policy configurations for least privilege enforcement.
+"""
 ```
 
 ---
 
-### `@package-registry`
-
-Define registry backends.
+### `@cloud-provider`
 
 ```bash
-@package-registry: github-npm-registry
+# @cloud-provider: gcp
+"""
+Optimize Cloud Run service configuration to reduce cold-start latency.
+"""
+```
+
+---
+
+### `@security-standards`
+
+```bash
+# @security-standards: CIS,NIST
+"""
+Check cloud infra against CIS benchmarks for S3 and IAM.
+"""
+```
+
+---
+
+### `@security-tools`
+
+```bash
+# @security-tools: snyk,trivy,codeql
+"""
+Inject image scanning into Docker build stage and run CodeQL on push.
+"""
+```
+
+---
+
+### `@pipeline-integration`
+
+```bash
+# @pipeline-integration: github-actions
+"""
+Trigger CodeQL analysis after successful test stage.
+"""
+```
+
+---
+
+### `@automation-tools`
+
+```bash
+# @automation-tools: prometheus-alertmanager
+"""
+Generate Alertmanager routes for CPU/memory usage above thresholds.
+"""
+```
+
+---
+
+### `@gitops-stack`
+
+```bash
+# @gitops-stack: argocd
+"""
+Generate ArgoCD Application YAMLs for multi-namespace rollout.
+"""
+```
+
+---
+
+### `@stack`
+
+```bash
+# @stack: prometheus,grafana,loki,tempo
+"""
+Configure observability stack with unified dashboards and logs correlation.
+"""
+```
+
+---
+
+### `@language`
+
+```bash
+# @language: python,bash
+"""
+Lint all Python scripts and Bash shell files for style violations.
+"""
+```
+
+---
+
+### `@base-images`
+
+```bash
+# @base-images: node:18-alpine,golang:1.22-alpine
+"""
+Use slim base images for minimal attack surface in container builds.
+"""
+```
+
+---
+
+### `@error-context`
+
+```bash
+# @error-context: k8s,terraform,cicd
+"""
+Analyze common failure patterns in Kubernetes job restarts and CI timeouts.
+"""
+```
+
+---
+
+### `@error-type`
+
+```bash
+# @error-type: container-crashloop
+"""
+Identify resource overcommitment leading to CrashLoopBackOff in pods.
+"""
+```
+
+---
+
+### `@retry-strategy`
+
+```bash
+# @retry-strategy: exponential-backoff(max=3)
+"""
+Retry flaky integration tests in CI with backoff.
+"""
+```
+
+---
+
+### `@timeout`
+
+```bash
+# @timeout: 600s
+"""
+Set global timeout for image build and signing process.
+"""
+```
+
+---
+
+### `@concurrency`
+
+```bash
+# @concurrency: 5
+"""
+Limit simultaneous database migrations to 5 to avoid lock contention.
+"""
+```
+
+---
+
+### `@output-format`
+
+```bash
+# @output-format: json
+"""
+Export scan results in JSON for ingestion by SonarCloud dashboard.
+"""
+```
+
+---
+
+### `@doc-style`
+
+```bash
+# @doc-style: Doxygen
+"""
+Document exported APIs with types, usage, and warnings.
+"""
+```
+
+---
+
+### `@detail-level`
+
+```bash
+# @detail-level: maintainer
+"""
+Include architectural justifications and cross-module notes.
+"""
+```
+
+---
+
+### `@env-file`
+
+```bash
+# @env-file: .copilot/env.prod
+"""
+Inject environment variables securely into container builds.
+"""
+```
+
+---
+
+### `@secret-provider`
+
+```bash
+# @secret-provider: hashicorp-vault(path=secret/cicd)
+"""
+Fetch credentials for Docker registry login during deploy.
+"""
+```
+
+---
+
+### `@config-version`
+
+```bash
+# @config-version: 2.3.1
+"""
+Lock metadata schema version for reproducibility.
+"""
+```
+
+---
+
+### `@feature-flags`
+
+```bash
+# @feature-flags: canary-deploy=enabled
+"""
+Toggle Canary release mechanism on or off per environment.
+"""
+```
+
+---
+
+### `@depends-on`
+
+```bash
+# @depends-on: postgres:14.3
+"""
+Ensure service B starts after database A is up.
+"""
+```
+
+---
+
+### `@service-binding`
+
+```bash
+# @service-binding: redis->cache
+"""
+Wire Redis into application as a caching backend.
+"""
 ```
 
 ---
 
 ### `@dependency-resolution`
 
-Dependency conflict resolution logic.
-
 ```bash
-@dependency-resolution: strict-semver
+# @dependency-resolution: strict-semver
+"""
+Avoid auto-upgrades of breaking changes in semantic versioning.
+"""
 ```
 
 ---
 
-📌 *Last updated: Q2 2025*
+### `@metrics-endpoint`
 
-> Built from real-world DevOps pain.  
-> If this helps you avoid a 3am PagerDuty alert, mission accomplished.
+```bash
+# @metrics-endpoint: prometheus:9090
+"""
+Configure Prometheus scrape for custom metrics exporter.
+"""
+```
+
+---
+
+### `@log-level`
+
+```bash
+# @log-level: debug
+"""
+Enable verbose logs for test environments only.
+"""
+```
+
+---
+
+### `@alert-channels`
+
+```bash
+# @alert-channels: slack#devops-alerts,pagerduty
+"""
+Send critical alerts to Slack + PagerDuty teams.
+"""
+```
+
+---
+
+### `@alert-thresholds`
+
+```bash
+# @alert-thresholds: cpu>80%,memory>90%
+"""
+Define when alerts should be triggered for pod resources.
+"""
+```
+
+---
+
+### `@tech-preview`
+
+```bash
+# @tech-preview: wasm-runtime
+"""
+Enable WASM runtime support in edge gateways.
+"""
+```
+
+---
+
+### `@beta-features`
+
+```bash
+# @beta-features: ai-assisted-debugging
+"""
+Enable experimental AI-powered debugging hints in CI.
+"""
+```
+
+---
+
+### `@debug-mode`
+
+```bash
+# @debug-mode: port=2345
+"""
+Start debugger listener on dev containers.
+"""
+```
+
+---
+
+### `@trace-sampling`
+
+```bash
+# @trace-sampling: 10%
+"""
+Only sample 10% of traces for performance analysis.
+"""
+```
+
+---
+
+### `@rbac-rules`
+
+```yaml
+@rbac-rules:
+  - verbs: [get, list]
+    resources: [pods]
+"""
+Grant readonly access to deployment pods for support team.
+"""
+```
+
+---
+
+### `@approval-workflow`
+
+```bash
+# @approval-workflow: 2-maintainers
+"""
+Block merge until 2 code owners approve changes.
+"""
+```
+
+---
+
+### `@resource-quotas`
+
+```yaml
+@resource-quotas:
+  cpu: 2000m
+  memory: 4Gi
+"""
+Prevent noisy neighbors in a multi-tenant cluster.
+"""
+```
+
+---
+
+### `@scale-policy`
+
+```bash
+# @scale-policy: horizontal(max=10)
+"""
+Use HPA for scaling frontend pods under load.
+"""
+```
+
+---
+
+### `@compliance-framework`
+
+```bash
+# @compliance-framework: soc2-type2
+"""
+Ensure data access logs, RBAC and retention meet audit requirements.
+"""
+```
+
+---
+
+### `@audit-trail`
+
+```bash
+# @audit-trail: aws-cloudtrail
+"""
+Enable CloudTrail for IAM, EC2 and VPC changes.
+"""
+```
+
+---
+
+### `@data-classification`
+
+```bash
+# @data-classification: pii
+"""
+Enable encryption, anonymization and logging redactions.
+"""
+```
+
+---
+
+### `@encryption-at-rest`
+
+```bash
+# @encryption-at-rest: aes-256
+"""
+Use AWS KMS + AES-256 for EBS volume encryption.
+"""
+```
+
+---
+
+### `@extension-point`
+
+```bash
+# @extension-point: custom-linter
+"""
+Plug into the PR creation event to run custom linting logic.
+"""
+```
+
+---
+
+### `@plugin-apis`
+
+```bash
+# @plugin-apis: kubernetes-client@8.0
+"""
+Use k8s client to query pod labels and conditions.
+"""
+```
+
+---
+
+### `@package-registry`
+
+```bash
+# @package-registry: github-npm-registry
+"""
+Use private GitHub NPM registry for internal packages.
+"""
+```
 
 ---
