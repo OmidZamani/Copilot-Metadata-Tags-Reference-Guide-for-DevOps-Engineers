@@ -1,10 +1,10 @@
----
+
 
 # `copilot-metadata-reference`  
 **Advanced GitHub Copilot Metadata Tags**  
 *A field guide for DevOps engineers, SREs, and infra nerds.*
 
----
+
 
 ## 🧠 @copilot-mode
 
